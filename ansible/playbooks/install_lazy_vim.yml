@@ -1,0 +1,20 @@
+---
+- hosts: all
+  tasks:
+    - name: Backup nvim config
+      ansible.builtin.shell: |
+        [ -d ~/.config/nvim ] && mv ~/.config/nvim ~/.config/nvim.bak || true
+        [ -d ~/.local/share/nvim ] && mv ~/.local/share/nvim ~/.local/share/nvim.bak || true
+        [ -d ~/.local/state/nvim ] && mv ~/.local/state/nvim ~/.local/state/nvim.bak || true
+        [ -d ~/.cache/nvim ] && mv ~/.cache/nvim ~/.cache/nvim.bak || true
+      ignore_errors: yes
+
+    - name: Install lazyvim
+      ansible.builtin.git:
+        repo: https://github.com/LazyVim/starter
+        clone: true
+        dest: ~/.config/nvim
+
+    - name: Remove git folder
+      ansible.builtin.command: rm -rf ~/.config/nvim/.git
+

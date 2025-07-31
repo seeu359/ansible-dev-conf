@@ -1,0 +1,16 @@
+---
+- hosts: all
+  tasks:
+    - name: Install ubuntu packages
+      ansible.builtin.apt:
+        pkg:
+          - fd-find
+          - ripgrep
+          - neovim
+          - git
+          - nodejs
+          - npm
+        state: latest
+        update_cache: true
+      become: yes
+
